@@ -14,10 +14,21 @@ const Shop = () => {
             .then(data => setProducts(data))
     }, []);
 
-    useEffect(()=>{
-        const storeCart =getShoppingCart();
-        console.log(storeCart)
-    },[])
+    useEffect(() => {
+        const storeCart = getShoppingCart();
+        const addProduct = [];
+        for (const id in storeCart) {
+            const saveProduct = products.find(product => product.id === id);
+
+            if (saveProduct) {
+                const quantity = storeCart[id]
+                saveProduct.quantity = quantity
+                addProduct.push(saveProduct);
+            }
+
+        }
+        setCart(addProduct);
+    }, [products])
 
     const handleAddToCart = (product) => {
         // cart.push(product); 
